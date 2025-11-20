@@ -33,7 +33,7 @@
       "post": {
         "summary": "Inclusão de reports",
         "deprecated": false,
-        "description": "Inclusão de reportes na plataforma. Ao enviar um lote de reportes, a plataforma vai fazer o processo de validação de cada reporte de maneira síncrona e devolver o resultado dessa validação na resposta. O status HTTP de retorno será 200 caso **todos** dos reportes enviados forem aceitos. Caso pelo menos 1 reporte esteja inconsistente, o status de retorno será 207 - veja documentação de cada status de retorno para mais informações. \n\nOs dados inseridos na API de Reporte são sempre processados de maneira assíncrona, e sua persistência se utiliza de consistência posterior (eventual consistency), portanto, um registro tem um tempo de processamento em que ele não estará disponível para consulta até que ele seja persistido.\n\nO limite de reportes de cada envio de lote é de 5.000 entradas no array.\n",
+        "description": "Inclusão de reportes na plataforma. Ao enviar um lote de reportes, a plataforma vai fazer o processo de validação de cada reporte de maneira síncrona e devolver o resultado dessa validação na resposta. O status HTTP de retorno será 200 caso **todos** dos reportes enviados forem aceitos. Caso pelo menos 1 reporte esteja inconsistente, o status de retorno será 207 - veja documentação de cada status de retorno para mais informações.\n\nOs dados inseridos na API de Reporte são sempre processados de maneira assíncrona, e sua persistência se utiliza de consistência posterior (eventual consistency), portanto, um registro tem um tempo de processamento em que ele não estará disponível para consulta até que ele seja persistido.\n\nO limite de reportes de cada envio de lote é de 5.000 entradas no array. Teste\n",
         "operationId": "add-reports",
         "tags": [
           "Private API"
@@ -53,7 +53,8 @@
                     {
                       "$ref": "#/components/schemas/ServerReportRequest"
                     }
-                  ]
+                  ],
+                  "description": "Teste"
                 }
               },
               "example": [
@@ -120,38 +121,26 @@
                     "$ref": "#/components/schemas/ReportResponse"
                   }
                 },
-                "example": [
-                  {
-                    "reportId": "424ad55c-36cc-4077-b85e-c22ea984cc4a",
-                    "correlationId": "wNupARo7I9E2PLJZph18a0M9y7DcUe7ITt3DqUOJd9NVjnskxf",
-                    "status": "ACCEPTED"
-                  },
-                  {
-                    "reportId": "4095388d-f44f-499a-a9a7-2dbffce1bb8a",
-                    "correlationId": "8qPzRL4nBzesCc3H1827UlqqEuTT4F5lN82DuJllcnL5VnnY5j",
-                    "status": "ACCEPTED"
-                  },
-                  {
-                    "reportId": "0f3fcceb-39f6-41b4-a75d-8444244bd836",
-                    "status": "ACCEPTED"
-                  }
-                ]
-              }
-            },
-            "headers": {}
-          },
-          "207": {
-            "description": "O status 207 (Multi-Status) informa ao solicitante que o formato da requisição está correto, mas que entradas do array contém erro de validação em pelo menos 1 item. Ou seja, se todos os elementos do array informado estiverem com falha de validação, a operação vai devolver o status 207, e no corpo da resposta todos os elementos do array vão estar com status DISCARDED e com sua respectiva mensagem.\n\nA operação vai devolver um array com todos os resultados, e garante que ele esteja na mesma ordem do array da requisição.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "maxItems": 5000,
-                  "items": {
-                    "$ref": "#/components/schemas/ReportResponse"
-                  }
-                },
                 "examples": {
+                  "1": {
+                    "summary": "Todos Processados",
+                    "value": [
+                      {
+                        "reportId": "424ad55c-36cc-4077-b85e-c22ea984cc4a",
+                        "correlationId": "wNupARo7I9E2PLJZph18a0M9y7DcUe7ITt3DqUOJd9NVjnskxf",
+                        "status": "ACCEPTED"
+                      },
+                      {
+                        "reportId": "4095388d-f44f-499a-a9a7-2dbffce1bb8a",
+                        "correlationId": "8qPzRL4nBzesCc3H1827UlqqEuTT4F5lN82DuJllcnL5VnnY5j",
+                        "status": "ACCEPTED"
+                      },
+                      {
+                        "reportId": "0f3fcceb-39f6-41b4-a75d-8444244bd836",
+                        "status": "ACCEPTED"
+                      }
+                    ]
+                  },
                   "2": {
                     "summary": "Primeiro registro com falha",
                     "value": [
@@ -202,6 +191,69 @@
                         "message": "Missing fields: 'statusCode'"
                       }
                     ]
+                  },
+                  "5": {
+                    "summary": "400",
+                    "value": {
+                      "message": "Invalid payload format: MUST be an array"
+                    }
+                  },
+                  "6": {
+                    "summary": "NotAuthorized",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "7": {
+                    "summary": "Forbidden",
+                    "value": {
+                      "message": "Forbidden"
+                    }
+                  },
+                  "8": {
+                    "summary": "NotAcceptable",
+                    "value": {
+                      "message": "Content type not accepted"
+                    }
+                  },
+                  "9": {
+                    "summary": "Limite de registros excedido",
+                    "value": {
+                      "message": "Record limit exceeded"
+                    }
+                  },
+                  "10": {
+                    "summary": "NotAcceptable",
+                    "value": {
+                      "message": "Unsupported Media Type"
+                    }
+                  },
+                  "11": {
+                    "summary": "NotAcceptable",
+                    "value": {
+                      "message": "Too Many Requests"
+                    }
+                  },
+                  "12": {
+                    "summary": "InternalServerError",
+                    "value": {
+                      "message": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "207": {
+            "description": "O status 207 (Multi-Status) informa ao solicitante que o formato da requisição está correto, mas que entradas do array contém erro de validação em pelo menos 1 item. Ou seja, se todos os elementos do array informado estiverem com falha de validação, a operação vai devolver o status 207, e no corpo da resposta todos os elementos do array vão estar com status DISCARDED e com sua respectiva mensagem.\n\nA operação vai devolver um array com todos os resultados, e garante que ele esteja na mesma ordem do array da requisição.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "maxItems": 5000,
+                  "items": {
+                    "$ref": "#/components/schemas/ReportResponse"
                   }
                 }
               }
@@ -214,9 +266,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GenericError"
-                },
-                "example": {
-                  "message": "Invalid payload format: MUST be an array"
                 }
               }
             },
@@ -228,9 +277,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GenericError"
-                },
-                "example": {
-                  "message": "Unauthorized"
                 }
               }
             },
@@ -242,9 +288,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GenericError"
-                },
-                "example": {
-                  "message": "Forbidden"
                 }
               }
             },
@@ -256,9 +299,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GenericError"
-                },
-                "example": {
-                  "message": "Content type not accepted"
                 }
               }
             },
@@ -270,9 +310,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GenericError"
-                },
-                "example": {
-                  "message": "Record limit exceeded"
                 }
               }
             },
@@ -284,9 +321,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GenericError"
-                },
-                "example": {
-                  "message": "Unsupported Media Type"
                 }
               }
             },
@@ -298,9 +332,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GenericError"
-                },
-                "example": {
-                  "message": "Too Many Requests"
                 }
               }
             },
@@ -312,9 +343,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GenericError"
-                },
-                "example": {
-                  "message": "Internal Server Error"
                 }
               }
             },
