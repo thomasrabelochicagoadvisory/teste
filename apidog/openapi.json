@@ -5184,6 +5184,178 @@
         ]
       }
     },
+    "responses": {
+      "Default429Error": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GenericError"
+            },
+            "examples": {
+              "NotAccetable": {
+                "summary": "NotAccetable",
+                "value": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Default400Error": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GenericError"
+            },
+            "examples": {
+              "Bad Request": {
+                "summary": "Bad Request",
+                "value": {
+                  "message": "Invalid payload format: MUST be an array"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Default401Error": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GenericError"
+            },
+            "examples": {
+              "NotAuthorized": {
+                "summary": "NotAuthorized",
+                "value": {
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Default403Error": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GenericError"
+            },
+            "examples": {
+              "Forbidden": {
+                "summary": "Forbidden",
+                "value": {
+                  "message": "Forbidden"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Default406Error": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GenericError"
+            },
+            "examples": {
+              "NotAccetable": {
+                "summary": "NotAccetable",
+                "value": {
+                  "message": "Content type not accepted"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Default415Error": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GenericError"
+            },
+            "examples": {
+              "NotAccetable": {
+                "summary": "NotAccetable",
+                "value": {
+                  "message": "Unsupported Media Type"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Default500Error": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GenericError"
+            },
+            "examples": {
+              "InternalServerError": {
+                "summary": "InternalServerError",
+                "value": {
+                  "message": "Internal Server Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Record not found": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "Invalid input": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ]
+            }
+          }
+        }
+      }
+    },
     "securitySchemes": {
       "bearer": {
         "type": "http",
