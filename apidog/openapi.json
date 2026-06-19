@@ -3123,6 +3123,11 @@
                     "type": "string"
                   }
                 }
+              },
+              "example": {
+                "client_id": "{{client_id}}882ba573-787b-4462-bbd9-e3b39324aca7",
+                "client_secret": "882ba573-787b-4462-bbd9-e3b39324aca7",
+                "grant_type": "client_credentials"
               }
             }
           }
